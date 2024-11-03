@@ -90,8 +90,8 @@ def SortByGPA(Data):
 # Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def Visualisation(Data):
-    # Create a figure with multiple subplots
-    fig, axs = plt.subplots(3, 2, figsize=(15, 15))
+    # Create a figure with 2 rows and 2 columns for 4 plots
+    fig, axs = plt.subplots(2, 2, figsize=(15, 10))
     
     # Distribution of GradeClass
     sns.countplot(x='GradeClass', data=Data, palette='Set2', ax=axs[0, 0])
@@ -118,18 +118,6 @@ def Visualisation(Data):
     axs[1, 1].set_xlabel('Parental Support')
     axs[1, 1].set_ylabel('Count')
     axs[1, 1].legend(title='Grade Class')
-
-    # Age Histogram
-    axs[2, 0].hist(Data["Age"], bins=8, color="green")
-    axs[2, 0].set_title("Distribution of Age")
-    axs[2, 0].set_xlabel("Age")
-    axs[2, 0].set_ylabel("Count")
-
-    # Gender Histogram
-    axs[2, 1].hist(Data["Gender"], bins=2, color="purple")
-    axs[2, 1].set_title("Gender Distribution")
-    axs[2, 1].set_xlabel("Gender")
-    axs[2, 1].set_ylabel("Count")
 
     # Adjust layout
     plt.tight_layout()
