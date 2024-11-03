@@ -17,6 +17,7 @@ import seaborn as sns
 # Output: DataFrame containing the data
 # Date: 29/07/2024
 # Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def GetData(Path):
     Data = pd.read_csv(Path)
@@ -30,6 +31,7 @@ def GetData(Path):
 # Output: Data types and info printed to console
 # Date: 29/07/2024
 # Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def Data_types(Data):
     print(Data.dtypes)
@@ -41,6 +43,9 @@ def Data_types(Data):
 # Description: Initializes feature and target variables
 # Input: DataFrame
 # Output: Feature and target variables
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def DataInitialise(Data):
     X = Data.drop('GradeClass', axis=1)
@@ -52,6 +57,9 @@ def DataInitialise(Data):
 # Description: Splits data into training and testing sets
 # Input: Feature and target variables
 # Output: Training and testing datasets
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def DataManipulation(X, Y):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
@@ -62,6 +70,9 @@ def DataManipulation(X, Y):
 # Description: Sorts the data by GPA in descending order
 # Input: DataFrame
 # Output: Sorted DataFrame
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def SortByGPA(Data):
     sorted_data = Data.sort_values(by='GPA', ascending=False)
@@ -71,57 +82,57 @@ def SortByGPA(Data):
 
 #################################################
 # Function_Name: Visualisation()
-# Description: Visualizes data through various plots
+# Description: Visualizes data through various plots in a single figure
 # Input: DataFrame
 # Output: Plots displayed to console
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def Visualisation(Data):
+    # Create a figure with multiple subplots
+    fig, axs = plt.subplots(3, 2, figsize=(15, 15))
+    
     # Distribution of GradeClass
-    plt.figure(figsize=(8, 6))
-    sns.countplot(x='GradeClass', data=Data, palette='Set2')
-    plt.title('Distribution of GradeClass')
-    plt.xlabel('Grade Class')
-    plt.ylabel('Count')
-    plt.show()
+    sns.countplot(x='GradeClass', data=Data, palette='Set2', ax=axs[0, 0])
+    axs[0, 0].set_title('Distribution of GradeClass')
+    axs[0, 0].set_xlabel('Grade Class')
+    axs[0, 0].set_ylabel('Count')
 
     # Study Time vs GPA Scatter Plot
-    plt.figure(figsize=(8, 6))
-    sns.scatterplot(x='StudyTimeWeekly', y='GPA', hue='GradeClass', data=Data, palette='Set1')
-    plt.title('Study Time vs GPA')
-    plt.xlabel('Study Time (Weekly)')
-    plt.ylabel('GPA')
-    plt.show()
+    sns.scatterplot(x='StudyTimeWeekly', y='GPA', hue='GradeClass', data=Data, palette='Set1', ax=axs[0, 1])
+    axs[0, 1].set_title('Study Time vs GPA')
+    axs[0, 1].set_xlabel('Study Time (Weekly)')
+    axs[0, 1].set_ylabel('GPA')
 
     # Participation in Extracurricular Activities by Grade Class
-    plt.figure(figsize=(8, 6))
-    sns.countplot(x='Extracurricular', hue='GradeClass', data=Data, palette='pastel')
-    plt.title('Participation in Extracurricular Activities by Grade Class')
-    plt.xlabel('Participates in Extracurricular')
-    plt.ylabel('Count')
-    plt.legend(title='Grade Class')
-    plt.show()
+    sns.countplot(x='Extracurricular', hue='GradeClass', data=Data, palette='pastel', ax=axs[1, 0])
+    axs[1, 0].set_title('Participation in Extracurricular Activities by Grade Class')
+    axs[1, 0].set_xlabel('Participates in Extracurricular')
+    axs[1, 0].set_ylabel('Count')
+    axs[1, 0].legend(title='Grade Class')
 
     # Parental Support vs GradeClass
-    plt.figure(figsize=(8, 6))
-    sns.countplot(x='ParentalSupport', hue='GradeClass', data=Data, palette='coolwarm')
-    plt.title('Parental Support and Grade Class')
-    plt.xlabel('Parental Support')
-    plt.ylabel('Count')
-    plt.legend(title='Grade Class')
-    plt.show()
+    sns.countplot(x='ParentalSupport', hue='GradeClass', data=Data, palette='coolwarm', ax=axs[1, 1])
+    axs[1, 1].set_title('Parental Support and Grade Class')
+    axs[1, 1].set_xlabel('Parental Support')
+    axs[1, 1].set_ylabel('Count')
+    axs[1, 1].legend(title='Grade Class')
 
     # Age Histogram
-    plt.hist(Data["Age"], bins=8, color="green")
-    plt.title("Distribution of Age")
-    plt.xlabel("Age")
-    plt.ylabel("Count")
-    plt.show()
+    axs[2, 0].hist(Data["Age"], bins=8, color="green")
+    axs[2, 0].set_title("Distribution of Age")
+    axs[2, 0].set_xlabel("Age")
+    axs[2, 0].set_ylabel("Count")
 
     # Gender Histogram
-    plt.hist(Data["Gender"], bins=2, color="purple")
-    plt.title("Gender Distribution")
-    plt.xlabel("Gender")
-    plt.ylabel("Count")
+    axs[2, 1].hist(Data["Gender"], bins=2, color="purple")
+    axs[2, 1].set_title("Gender Distribution")
+    axs[2, 1].set_xlabel("Gender")
+    axs[2, 1].set_ylabel("Count")
+
+    # Adjust layout
+    plt.tight_layout()
     plt.show()
 
 #################################################
@@ -129,6 +140,9 @@ def Visualisation(Data):
 # Description: Implements Decision Tree classifier and prints accuracy
 # Input: Training and testing datasets
 # Output: Accuracy of the Decision Tree model
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def DecisionTree_Classifier(X_train, X_test, Y_train, Y_test):
     Dt = DecisionTreeClassifier(random_state=66)
@@ -141,6 +155,9 @@ def DecisionTree_Classifier(X_train, X_test, Y_train, Y_test):
 # Description: Implements Random Forest classifier and prints accuracy
 # Input: Training and testing datasets
 # Output: Accuracy of the Random Forest model
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def RandomForest_Classifier(X_train, X_test, Y_train, Y_test):
     RF = RandomForestClassifier(n_estimators=100)
@@ -151,6 +168,9 @@ def RandomForest_Classifier(X_train, X_test, Y_train, Y_test):
 #################################################
 # Function_Name: main()
 # Description: Entry point function to call other functions
+# Date: 29/07/2024
+# Author: Rushikesh Waghmare
+# Data: Student performance data from "Student_performance_data.csv"
 #################################################
 def main():
     Data = GetData("Student_performance_data.csv")
